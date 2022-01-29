@@ -107,9 +107,9 @@ public class Main extends JavaPlugin implements Listener {
 	public ShapedRecipe getFlyPotionRecipe() {
 		NamespacedKey key = new NamespacedKey(this, "potionofflight"); // custom name, can be anything
 		ShapedRecipe recipe = new ShapedRecipe(key, getItem());
-		recipe.shape("GGG", "GEG", "GGG");
+		recipe.shape("GFG", "FFF", "GFG");
 		recipe.setIngredient('G', Material.GLASS_BOTTLE);
-		recipe.setIngredient('E', Material.ELYTRA);
+		recipe.setIngredient('F', Material.FEATHER);
 		return recipe;
 	}
 }
