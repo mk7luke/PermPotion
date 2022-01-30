@@ -70,7 +70,7 @@ public class Main extends JavaPlugin implements Listener {
 	public void onConsume(PlayerItemConsumeEvent event) {
 		Player player = (Player) event.getPlayer();
 		if (player.getInventory().getItemInMainHand() != null) {
-			if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName() != null) {
+			if (player.getInventory().getItemInMainHand().getItemMeta() != null) {
 				if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Potion of Flight")) {
 					if (player.getInventory().getItemInMainHand().getItemMeta().hasLore()) {
 						// RUN CODE HERE AFTER CHECKING FOR POTION
