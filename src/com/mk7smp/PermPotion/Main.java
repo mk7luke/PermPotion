@@ -91,7 +91,6 @@ public class Main extends JavaPlugin implements Listener {
 							// 20L = 1 Second
 							Bukkit.getScheduler().runTaskLater(this, new Runnable() {
 								public void run() {
-									//player.sendMessage("5 seconds!");
 									if (player.isOnline() == true) {
 										if (player.hasPermission("permpotion.flight")){
 											Bukkit.dispatchCommand(console, command);
@@ -101,8 +100,7 @@ public class Main extends JavaPlugin implements Listener {
 											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + pname + " lands.bypass.fly");
 										}
 									} else {
-										// console.sendMessage("");
-										System.out.println(pname + " disconnected before flight potion expired. Player will need 'permpotion.flight' removed from their permissions to be able to use the flight potion again.");
+										System.out.println(pname + " will need 'permpotion.flight' removed from their permissions to be able to use the flight potion again. (Reason: Disconnected before flight potion expired.)");
 									}
 								}
 							}, 400L);
