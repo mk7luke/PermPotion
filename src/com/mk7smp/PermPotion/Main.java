@@ -69,6 +69,7 @@ public class Main extends JavaPlugin implements Listener {
 	@EventHandler
 	public void onConsume(PlayerItemConsumeEvent event) {
 		Player player = (Player) event.getPlayer();
+		String pname = player.getName();
 		if (player.getInventory().getItemInMainHand() != null) {
 			if (player.getInventory().getItemInMainHand().getItemMeta() != null) {
 				if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Potion of Flight")) {
@@ -78,9 +79,9 @@ public class Main extends JavaPlugin implements Listener {
 							event.setCancelled(true);
 						} else {
 							// RUN CODE HERE AFTER CHECKING FOR POTION
-							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + player.getName() + " permpotion.flight");
-							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + player.getName() + " lands.bypass.wilderness.fly");
-							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + player.getName() + " lands.bypass.fly");
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + pname + " permpotion.flight");
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + pname + " lands.bypass.wilderness.fly");
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + pname + " lands.bypass.fly");
 							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "essentials:fly " + player.getName());
 							player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 400, 1)); // 100 = 5 seconds
 							
@@ -91,12 +92,17 @@ public class Main extends JavaPlugin implements Listener {
 							Bukkit.getScheduler().runTaskLater(this, new Runnable() {
 								public void run() {
 									//player.sendMessage("5 seconds!");
-									if (player.hasPermission("permpotion.flight")){
-										Bukkit.dispatchCommand(console, command);
-										player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 150, 1)); // 100 = 5 seconds
-										Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + player.getName() + " permpotion.flight");
-										Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + player.getName() + " lands.bypass.wilderness.fly");
-										Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + player.getName() + " lands.bypass.fly");
+									if (player.isOnline() == true) {
+										if (player.hasPermission("permpotion.flight")){
+											Bukkit.dispatchCommand(console, command);
+											player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 150, 1)); // 100 = 5 seconds
+											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + pname + " permpotion.flight");
+											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + pname + " lands.bypass.wilderness.fly");
+											Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + pname + " lands.bypass.fly");
+										}
+									} else {
+										// console.sendMessage("");
+										System.out.println(pname + " disconnected before flight potion expired. Player will need 'permpotion.flight' removed from their permissions to be able to use the flight potion again.");
 									}
 								}
 							}, 400L);
