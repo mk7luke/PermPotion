@@ -74,7 +74,8 @@ public class Main extends JavaPlugin implements Listener {
 				if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Potion of Flight")) {
 					if (player.getInventory().getItemInMainHand().getItemMeta().hasLore()) {
 						if (player.hasPermission("permpotion.flight")) { // CHECK IF PLAYER ALREADY HAS FLIGHT
-							player.sendMessage("You already have active flight.");
+							player.sendMessage("You already have active flight. Item was not consumed.");
+							event.setCancelled(true);
 						} else {
 							// RUN CODE HERE AFTER CHECKING FOR POTION
 							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + player.getName() + " permpotion.flight");
