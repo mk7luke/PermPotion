@@ -73,30 +73,33 @@ public class Main extends JavaPlugin implements Listener {
 			if (player.getInventory().getItemInMainHand().getItemMeta() != null) {
 				if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("Potion of Flight")) {
 					if (player.getInventory().getItemInMainHand().getItemMeta().hasLore()) {
-						// RUN CODE HERE AFTER CHECKING FOR POTION
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + player.getName() + " permpotion.flight");
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + player.getName() + " lands.bypass.wilderness.fly");
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + player.getName() + " lands.bypass.fly");
-						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "essentials:fly " + player.getName());
-						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 400, 1)); // 100 = 5 seconds
-						
-						ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-						String command = "essentials:fly " + player.getName();
-						// begin timer
-						// 20L = 1 Second
-						Bukkit.getScheduler().runTaskLater(this, new Runnable() {
-							public void run() {
-								//player.sendMessage("5 seconds!");
-								if (player.hasPermission("permpotion.flight")){
-									Bukkit.dispatchCommand(console, command);
-									player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 150, 1)); // 100 = 5 seconds
-									Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + player.getName() + " permpotion.flight");
-									Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + player.getName() + " lands.bypass.wilderness.fly");
-									Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + player.getName() + " lands.bypass.fly");
+						if (player.hasPermission("permpotion.flight")) { // CHECK IF PLAYER ALREADY HAS FLIGHT
+							player.sendMessage("You already have active flight.");
+						} else {
+							// RUN CODE HERE AFTER CHECKING FOR POTION
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + player.getName() + " permpotion.flight");
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + player.getName() + " lands.bypass.wilderness.fly");
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manuaddp " + player.getName() + " lands.bypass.fly");
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "essentials:fly " + player.getName());
+							player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 400, 1)); // 100 = 5 seconds
+							
+							ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+							String command = "essentials:fly " + player.getName();
+							// begin timer
+							// 20L = 1 Second
+							Bukkit.getScheduler().runTaskLater(this, new Runnable() {
+								public void run() {
+									//player.sendMessage("5 seconds!");
+									if (player.hasPermission("permpotion.flight")){
+										Bukkit.dispatchCommand(console, command);
+										player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_FALLING, 150, 1)); // 100 = 5 seconds
+										Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + player.getName() + " permpotion.flight");
+										Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + player.getName() + " lands.bypass.wilderness.fly");
+										Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "manudelp " + player.getName() + " lands.bypass.fly");
+									}
 								}
-							}
-						}, 400L);
-						
+							}, 400L);
+						}
 					}
 				}
 			}
